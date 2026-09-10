@@ -1,0 +1,75 @@
+@startuml C4_Container_Future_2_0
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(analyst, "Бизнес-аналитик домена", "Строит отчёты и data products")
+Person(doctor, "Врач / Оператор клиники", "Работает с операционной системой")
+Person(fintech_user, "Клиент финтеха", "Пользуется банковскими сервисами")
+Person(partner, "Партнёр", "Интегрируется через data products")
+Person(regulator, "Регулятор / Аудитор", "Проверяет доступ и соответствие")
+
+System_Boundary(c1, "Будущее 2.0 - Целевая архитектура (через 1 год)") {
+
+    Container(portal, "Self-Service Data Portal", "Web + API", "Каталог data products, Semantic Layer, Report Builder, ABAC")
+    
+    Container_Boundary(clinic, "Clinic Domain") {
+        Container(clinic_db, "Operational DB", "PostgreSQL", "Пациенты, визиты, расписание, персонал, инвентаризация")
+        Container(clinic_dwh, "Domain Analytical Store", "ClickHouse / BigQuery", "Аналитические витрины клиники (без медкарт)")
+        Container(clinic_stream, "Domain Event Producer", "Kafka Producer", "События домена")
+    }
+
+    Container_Boundary(fintech, "Fintech Domain") {
+        Container(core_banking, "Core Banking", "Go / Java", "Счета, платежи, кредиты, ledger")
+        Container(fintech_dwh, "Domain Analytical Store", "ClickHouse", "Финансовые KPI и агрегаты")
+        Container(scoring, "Credit Scoring", "Java / ML", "Скоринг и риск-модели")
+    }
+
+    Container_Boundary(ai, "AI Domain") {
+        Container(feature_store, "Feature Store", "Feast / Custom", "Признаки для моделей")
+        Container(model_registry, "Model Registry", "MLflow", "Версии моделей")
+        Container(inference, "Inference Service", "Python", "Онлайн/батч инференс")
+        Container(training, "Training Pipeline", "Python + K8s", "Обучение моделей (медданные внутри домена)")
+    }
+
+    Container_Boundary(partner, "Partner Domain (будущий)") {
+        Container(partner_integration, "Partner Integration", "API / Events", "Интеграция с фармацевтикой и производителями оборудования")
+        Container(partner_products, "Partner Data Products", "Data Product", "Данные, которыми партнёр готов делиться")
+    }
+
+    Container_Boundary(platform, "Shared Platform") {
+        Container(event_bus, "Event Bus", "Apache Kafka", "Асинхронная интеграция доменов")
+        Container(catalog, "Data Catalog", "DataHub / Amundsen", "Обнаружение и владение data products")
+        Container(identity, "Identity & Access", "Keycloak + OPA", "OIDC + ABAC")
+        Container(observability, "Observability", "Prometheus + Grafana + ELK", "Метрики, логи, трейсы")
+    }
+
+    ContainerDb(object_storage, "Object Storage", "S3-compatible", "Сырые и обработанные данные, бэкапы")
+}
+
+Rel(analyst, portal, "Строит отчёты и запрашивает data products", "HTTPS")
+Rel(doctor, clinic_db, "Работает с операционными данными", "HTTPS / gRPC")
+Rel(fintech_user, core_banking, "Пользуется сервисами", "HTTPS / API")
+Rel(partner, partner_integration, "Обменивается данными", "API / Events")
+Rel(partner, portal, "Получает разрешённые data products", "API")
+Rel(regulator, portal, "Аудит доступа и политик", "HTTPS")
+
+Rel(clinic_stream, event_bus, "Публикует события")
+Rel(core_banking, event_bus, "Публикует финансовые события")
+Rel(inference, event_bus, "Публикует результаты (агрегаты)")
+Rel(partner_integration, event_bus, "Публикует/потребляет события")
+
+Rel(event_bus, clinic_dwh, "Потребляет события")
+Rel(event_bus, fintech_dwh, "Потребляет события")
+Rel(event_bus, feature_store, "Потребляет события")
+
+Rel(clinic_dwh, portal, "Публикует data products")
+Rel(fintech_dwh, portal, "Публикует data products")
+Rel(feature_store, portal, "Публикует только разрешённые агрегаты")
+Rel(partner_products, portal, "Публикует data products партнёра")
+
+Rel(portal, identity, "Проверяет доступ")
+Rel(portal, catalog, "Использует метаданные")
+Rel(ai, object_storage, "Хранит модели и данные")
+Rel(clinic_dwh, object_storage, "Хранит аналитические данные")
+Rel(fintech_dwh, object_storage, "Хранит аналитические данные")
+
+@enduml

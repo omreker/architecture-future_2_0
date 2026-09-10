@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="38s8nO8hcrclLqCXq4ew">
+    <mxGraphModel dx="2009" dy="1125" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tf-group" parent="1" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=default;strokeColor=default;fontStyle=1;fontSize=12;startSize=40;align=center;verticalAlign=middle;fontFamily=Helvetica;fontColor=default;" value="Управляется Terraform (Infrastructure as Code)" vertex="1">
+          <mxGeometry height="420" width="1100" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="net-group" parent="tf-group" style="swimlane;whiteSpace=wrap;html=1;fillColor=default;strokeColor=default;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="Networking" vertex="1">
+          <mxGeometry height="280" width="320" x="70" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="vpc" parent="net-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;" value="VPC&#xa;future-2-0-network" vertex="1">
+          <mxGeometry height="50" width="130" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pub-subnet" parent="net-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;" value="Public Subnet&#xa;10.0.1.0/24" vertex="1">
+          <mxGeometry height="50" width="130" x="170" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="priv-subnet" parent="net-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;" value="Private Subnet&#xa;10.0.2.0/24" vertex="1">
+          <mxGeometry height="50" width="130" x="20" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="nat" parent="net-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;" value="NAT Gateway" vertex="1">
+          <mxGeometry height="50" width="130" x="170" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="igw" parent="net-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;" value="Internet Gateway" vertex="1">
+          <mxGeometry height="50" width="130" x="20" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="sg" parent="net-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;" value="Security Groups&#xa;web-sg + internal-sg" vertex="1">
+          <mxGeometry height="50" width="130" x="170" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-group" parent="tf-group" style="swimlane;whiteSpace=wrap;html=1;fillColor=default;strokeColor=default;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="Compute (Virtual Machines)" vertex="1">
+          <mxGeometry height="280" width="340" x="440" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="vm-portal" parent="comp-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2e7d32;" value="VM Portal&#xa;Self-Service Portal&#xa;4 vCPU / 8 GB / 50 GB SSD" vertex="1">
+          <mxGeometry height="70" width="140" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="vm-clinic" parent="comp-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2e7d32;" value="VM Clinic Domain&#xa;4 vCPU / 8 GB / 100 GB" vertex="1">
+          <mxGeometry height="70" width="140" x="180" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="vm-fintech" parent="comp-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2e7d32;" value="VM Fintech Domain&#xa;4 vCPU / 8 GB / 100 GB" vertex="1">
+          <mxGeometry height="70" width="140" x="20" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="vm-ai" parent="comp-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2e7d32;" value="VM AI Domain&#xa;8 vCPU / 16 GB / 200 GB" vertex="1">
+          <mxGeometry height="70" width="140" x="180" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="lb" parent="comp-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2e7d32;" value="Load Balancer" vertex="1">
+          <mxGeometry height="40" width="140" x="100" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="stor-group" parent="tf-group" style="swimlane;whiteSpace=wrap;html=1;fillColor=default;strokeColor=default;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="Storage" vertex="1">
+          <mxGeometry height="280" width="220" x="830" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="disks" parent="stor-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6a1b9a;" value="Persistent Disks&#xa;(network-ssd)&#xa;для всех VM" vertex="1">
+          <mxGeometry height="70" width="160" x="30" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket" parent="stor-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6a1b9a;" value="Object Storage&#xa;(S3-compatible Bucket)&#xa;private" vertex="1">
+          <mxGeometry height="70" width="160" x="30" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="manual-group" parent="1" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=default;strokeColor=default;fontStyle=1;fontSize=12;startSize=40;align=center;verticalAlign=middle;fontFamily=Helvetica;fontColor=default;" value="Разворачивается вручную (вне Terraform)" vertex="1">
+          <mxGeometry height="420" width="310" x="1180" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="manual1" parent="manual-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c62828;" value="Cloud / Folder&#xa;(создание аккаунта)" vertex="1">
+          <mxGeometry height="50" width="220" x="55" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="manual2" parent="manual-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c62828;" value="Сервисный аккаунт&#xa;+ IAM-роли" vertex="1">
+          <mxGeometry height="50" width="220" x="55" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="manual3" parent="manual-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c62828;" value="OAuth-токен /&#xa;статический ключ" vertex="1">
+          <mxGeometry height="50" width="220" x="55" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="manual4" parent="manual-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c62828;" value="SSH-ключи" vertex="1">
+          <mxGeometry height="50" width="220" x="55" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="manual5" parent="manual-group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c62828;" value="Внешние DNS-записи&#xa;(при необходимости)" vertex="1">
+          <mxGeometry height="50" width="220" x="55" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="engineer" parent="1" style="shape=mxgraph.basic.rect;rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#f9a825;fontStyle=1;" value="Инженер / CI/CD" vertex="1">
+          <mxGeometry height="50" width="160" x="570" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow1" edge="1" parent="1" source="engineer" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#1565c0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="650" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-label" connectable="0" parent="arrow1" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontStyle=1;fontSize=12;" value="terraform apply" vertex="1">
+          <mxGeometry relative="1" x="-0.1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
